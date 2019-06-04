@@ -10,12 +10,14 @@ liff-hand 是一個 LIFF 小幫手用來解決依靠 hash 改變路由的前端�
 
 ### 1. In the target page, add this code :
 
-```javascript
-//Inclue after liff.js
-//在 LIFF SDK 之後載入 liffhand.js
+```HTML
+<!--Inclue after liff sdk.js -->
+<!--在 LIFF SDK 之後載入 liffhand.js -->
 <script type="text/javascript" src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
 <script type="text/javascript" src="https://melixyen.github.io/liff-hand/liffhand.js"></script>
+```
 
+```javascript
 //The liff-hand will append to window.liff.$hand.
 //liff-hand 將會附加到 window.liff.$hand 這個位置
 liff.$hand.changeHash();
@@ -96,4 +98,4 @@ Sure you need initial liff sdk.js and liff-hand at next.html too.
 
 [LINE chatbot 台幣匯率機器人](https://line.me/R/ti/p/sCsZnuBg5V)
 
-輸數金額查價後，將假錢加入筆記本、開啟團購，即為 LIFF Web App 介面。
+輸入數字金額查價後，將價錢加入筆記本、開啟團購，即為 LIFF Web App 介面。
