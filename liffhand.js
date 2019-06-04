@@ -37,6 +37,7 @@
     }
 
     hand.changeHash = function(){
+        if(!hand.path) return false;
         hand.delay = parseInt(hand.delay);
         if(isNaN(hand.delay)){
             hand.delay = 0;
