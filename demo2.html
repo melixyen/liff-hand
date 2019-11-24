@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="zh-TW" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>LIFF Vue-router 測試</title>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-router@2.7.0/dist/vue-router.js"></script>
+<!--<script type="text/javascript" src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>-->
+<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script type="text/javascript" src="https://melixyen.github.io/liff-hand/liffhand2.js"></script>
+<script type="text/javascript" src="liffhand2.js"></script>
+
+<script type="text/javascript">
+Vue.config.productionTip = false;
+
+function initVue(){
+    
+    
+    var indexArea = {
+        template: '<div>' +
+            '<div>我是首頁</div>' +
+        '</div>'
+    };
+    
+    var aboutArea = {
+        template: '<div>' +
+            '<div v-html="kss"></div>' +
+        '</div>', 
+        data: function(){return {
+            kss: '<ul>' +
+                '<li>發行單位：<span style="background-color: #BBB;"><span style="color:blue;">極</span><span style="color:#FEFE11;">光</span><span style="color:#005530;">駭</span><span style="color:red;">客</span></span></li>' +
+                '<li>程式名稱：<a style="color:blue;" href="https://line.me/R/ti/p/sCsZnuBg5V">Line chatbot 台幣匯率機器人</a></li>' +
+                '<li>建立方式：點選上方連結於國外查價後加入筆記即可建立團購</li>' +
+                '</ul>'
+        }}
+    };
+
+    var mainRoute = new VueRouter({
+            routes: [
+                {path: '/', component: indexArea},
+                {path: '/about', name: 'about', component: aboutArea}
+            ]
+        });
+
+        var tpl = Vue.compile('<div id="main">' + 
+            '<router-view></router-view>' +
+            '<div id="statusBar"></div>' +
+        '</div>');
+
+        var main = new Vue({
+            router: mainRoute,
+            render: tpl.render,
+            el: '#main'
+    });
+}
+
+
+function initFn(){
+    liff.$hand.initAll(function(e){
+        if(liff.$hand.profile && liff.$hand.profile.displayName){
+            initVue();
+            liff.$hand.changeHash();
+        }else{
+            //取回 profile 失敗
+            alert('失敗，無法取得 LINE 用戶名稱或未設定顯示名稱。')
+        }
+    },function(){
+        //初始化失敗
+        alert('失敗，無法初始化');
+    },
+    {liffId:'1583085463-p9lKk7BR'},
+    {autoLogin: true}
+    )
+}
+</script>
+
+</head>
+<body onload="initFn()">
+    <div id="main"></div>
+    <div id="pop"></div>
+</body>
+</html>
