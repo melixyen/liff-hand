@@ -158,8 +158,12 @@
                 if(typeof(errorFn)=='function') successFn.apply(this, arguments);
             })
         }else{//V2
-            if(/\&/.test(location.hash)){
-                location.hash = location.hash.split('&')[0];
+            if(/\&/.test(location.hash) && !/^\#\/context_token/.test(location.hash)){
+                location.hash = location.hash.split('&/context_token')[0];
+                // var hashP = location.hash.split('&').filter(function(key){
+                //     return !(/^context_token|^code|^access_token|^feature_token|^id_token|^client_id/).test(key);
+                // }).join('&');
+                // location.hash = hashP;
             }
             if(typeof(liffCfg)=='string'){
                 liffCfg = { liffId: liffCfg }
