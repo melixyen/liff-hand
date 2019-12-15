@@ -158,6 +158,9 @@
                 if(typeof(errorFn)=='function') successFn.apply(this, arguments);
             })
         }else{//V2
+            if(/\&/.test(location.hash)){
+                location.hash = location.hash.split('&')[0];
+            }
             if(typeof(liffCfg)=='string'){
                 liffCfg = { liffId: liffCfg }
             }
