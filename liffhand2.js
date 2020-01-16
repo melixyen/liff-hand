@@ -168,29 +168,27 @@
             if(typeof(liffCfg)=='string'){
                 liffCfg = { liffId: liffCfg }
             }
-            storeA.liffId = liffCfg.liffId;
-            storeA.os = liff.getOS();
-            hand.regData(regesterConfig);
-            if(storeA.os=='web' && !GetP['code'] && !hand.getLSToken() && !GetP['liffClientId'] && (storeA.autoLogin || GetP['liffHandAutoLogin'])){//By PC, before login
-                liff.init(liffCfg, function(data){
-                    hand.login();
-                });
-            }else{
-                liff.init(liffCfg, function(data){
-                    hand.data = data;
-                    var initThis = this;
-                    var r = arguments;
-                    hand.getProfile(function(pFile){
-                        hand.profile = pFile;
-                        if(typeof(successFn)=='function'){
-                            successFn.apply(initThis, r);
-                        }
-                    })
-                    hand.isInWeb = !!(liff.getOS()=='web');
-                }, function(){
-                    if(typeof(errorFn)=='function') errorFn.apply(this, arguments);
-                })
-            }
+            liff.init(liffCfg, function(data){
+                storeA.liffId = liffCfg.liffId;
+                storeA.os = liff.getOS();
+                hand.regData(regesterConfig);
+                if(storeA.os=='web' && !GetP['code'] && !hand.getLSToken() && !GetP['liffClientId'] && (storeA.autoLogin || GetP['liffHandAutoLogin'])){//By PC, before login
+                        hand.login();
+                }else{
+                        hand.data = data;
+                        var initThis = this;
+                        var r = arguments;
+                        hand.getProfile(function(pFile){
+                            hand.profile = pFile;
+                            if(typeof(successFn)=='function'){
+                                successFn.apply(initThis, r);
+                            }
+                        })
+                        hand.isInWeb = !!(liff.getOS()=='web');
+                }
+            }, function(){
+                if(typeof(errorFn)=='function') errorFn.apply(this, arguments);
+            });
         }
     }
 
