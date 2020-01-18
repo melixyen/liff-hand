@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="zh-TW" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>LIFF 寫春聯抽祝福</title>
+<style>
+html {
+    font-size: 10vw;
+}
+body {
+	font-size: 0.5rem;
+	margin: 0px 2vw;
+    background-color: #e9e4c9;
+}
+.textA {
+    font-size: 0.5rem;
+    line-height: 0.63rem;
+    color: #7c4804;
+}
+.textB {
+    font-size: 0.4rem;
+    line-height: 0.5rem;
+    color: #0B4E75;
+}
+.textC, .textC1, .textC2 {
+    font-size: 0.32rem;
+    line-height: 0.4rem;
+    min-height: 0.4rem;
+    color: #a02421;
+}
+.textC1 {
+    color: #666;
+}
+.textC2 {
+    color: #1c814b;
+}
+.textError1 {
+    font-size: 0.38rem;
+    line-height: 0.42rem;
+    color: #F23;
+}
+.switchagg{
+    display: inline-block;
+    line-height: 1rem;
+}
+.springKey{
+    border: 1px solid #A29116;
+    box-sizing: border-box;
+    padding: 0.2rem;
+}
+.spInput{
+    width: 80%;
+    padding: 2px;
+    font-size: 0.5rem;
+}
+
+/* 切換開關 */
+.btnSwitch{
+    position: relative;
+    height: 1rem;
+    width: 1.7rem;
+    background-color: #FFF;
+    box-sizing: border-box;
+    border: 0.1rem solid #0acc2e;
+    border-radius: 0.5rem;
+}
+.btnSwitch.off{
+    border: 0.1rem solid #6f7470;
+}
+.btnSwitch .toggle{
+    position: absolute;
+    top: 0.05rem;
+    left: 0.05rem;
+    height: 0.7rem;
+    width: 0.7rem;
+    box-sizing: border-box;
+    border-radius: 0.8rem;
+    background-color: #0acc2e;
+}
+.btnSwitch.off .toggle{
+    left: auto;
+    right: 0.05rem;
+    background-color: #6f7470;
+}
+
+.btnType1, .btnType2, .btnType3, .btnType3A, .btnType5{
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    border: 0.1rem solid #092168;
+    background-color: #092168;
+    color: #efefef;
+    cursor: pointer;
+    text-align: center;
+    padding: 0.2rem;
+    margin: 0.2rem 0;
+    font-size: 0.5rem;
+}
+.btnType2 {
+    background-color:#dd3b0a;
+    border-color:#dd3b0a;
+}
+.btnType3{
+    display: inline-block;
+    background-color: #d3b73b;
+    color: #333;
+    border-color: #333;
+}
+.btnType3A{
+    display: inline-block;
+    background-color: #333;
+    color: #d3b73b;
+    border-color: #333;
+}
+.btnType5{
+    background-color: #fa0808;
+    color: #ffd700;
+    border-color: #ffd700;
+}
+.inBlk{display: inline-block;}
+.fLeft{float: left;}
+
+.bgST{
+    background-color: #F02323;
+}
+.fontST{
+    font-size: 0.66rem;
+}
+.h3CSS{
+    line-height: 0.8rem;
+    height: 0.82rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+}
+.h2CSS{
+    width: 1.3rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+.color_black{color:#111;}
+.color_gold{color:#ffd700;}
+
+/* Popup */
+#pop{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+#pop.show{
+    display: block;
+}
+
+#pop .bg1{
+    background-color: rgba(88,88,88,0.6);
+    z-index: 1002;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+#pop .text{
+    color: #f2f2f2;
+    text-align: center;
+}
+#pop .out{
+    background-color: #3456ba;
+    box-sizing: border-box;
+    border: 0.1rem solid #234589;
+    padding: 0.4rem 0.2rem;
+    margin: 0;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1004;
+    min-width: 7rem;
+}
+#pop .bottomArea{
+    background-color: #3456ba;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    height: 1.2rem;
+    padding: 0.2rem 0;
+    z-index: 1003;
+    width: 100vw;
+}
+#pop .btnOfMsg{
+    box-sizing: border-box;
+    display: inline-block;
+    border-radius: 0.3rem;
+    color: #fefefe;
+    background-color: #234589;
+    margin: 0 0.3rem;
+    padding: 0.1rem 0.2rem;
+    font-size: 0.5rem;
+}
+
+@media screen and  (orientation: portrait) {
+    #pop .bottomArea{
+        height: 2.2rem;
+        padding-top: 0.4rem;
+    }
+    #pop .btnOfMsg{
+        font-size: 0.6rem;
+        padding: 0.2rem 0.4rem;
+    }
+}
+</style>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-router@2.7.0/dist/vue-router.js"></script>
+<script type="text/javascript" src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+<!--<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>-->
+<script type="text/javascript" src="https://melixapi.000webhostapp.com/linebotGroupBuy/liff/pmsg.js"></script>
+<!--<script type="text/javascript" src="https://melixyen.github.io/liff-hand/liffhand2.js"></script>-->
+<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+<script src="./clean000.js"></script>
+
+<script type="text/javascript">
+//   var vConsole = new VConsole();
+Vue.config.productionTip = false;
+
+var liffParam = localStorage.getItem('LIFF_PARAM');
+var GetP = (function(){
+        var s = location.search, aryParam, tmpParam, rt = {};
+        if(s.indexOf('?')!=-1){
+            aryParam = s.split('?')[1].split('&');
+            aryParam.map(function(tmpA){
+                tmpParam = tmpA.split('=');
+                rt[tmpParam[0]] = decodeURIComponent(tmpParam[1]);
+            });
+            if(liffParam && rt['code']){
+                var objLiffParam = JSON.parse(liffParam);
+                for(var k in objLiffParam){
+                    if(!rt[k]) rt[k] = objLiffParam[k];
+                }
+            }
+            localStorage.setItem('LIFF_PARAM', JSON.stringify(rt));
+        }
+        return rt;
+})();
+
+var GB = {
+    ac: GetP.ac,
+    profile: {
+        displayName: '小明',
+        pictureUrl: 'https://i.imgur.com/eGWaGSg.jpg',
+        userId: 'Kde49ee52b3ea232fbe032e440c8bedc5'
+    },
+    sendRoomAD: function(h1, h2, h3, L2R, color, editURL, lotURL){
+        var fc = (color=='gold') ? '#ffd700' : '#111111';
+        var aryH1 = h1.split('');
+        var aryH2 = h2.split('');
+        var aryH3 = (!!h3) ? h3.split('') : [];
+        if(!L2R){ aryH3.reverse(); }
+        var aryContent = [];
+        if(aryH3.length>0){
+            aryH3 = aryH3.map(function(word){
+                return {
+                    "type": "text", "text": word, "wrap": true, "color": fc, "align": "center",
+                    "size": "xxl", "weight": "bold",
+                    "flex": 1
+                }
+            })
+            var h3Obj = {
+                    "type": "box",
+                    "layout": "baseline",
+                    "spacing": "sm",
+                    "backgroundColor": "#fd2323",
+                    "contents": aryH3
+            }
+            aryContent.push(h3Obj);
+        }
+
+        var h12Separator = {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "xxl",
+            "spacing": "sm",
+            "contents": [
+                { "type": "text", "text": "\n", "wrap": true, "weight": "bold", "color": "#100010", "size": "xxl" }
+            ]
+        }
+
+        var wordH1 = aryH1.join('\n'), wordH2 = aryH2.join('\n');
+        if(!L2R){
+            wordH1 = aryH2.join('\n'); wordH2 = aryH1.join('\n');
+        }
+
+        function makeH12Obj(wordS, colorS){
+            return {
+                "type": "box", "layout": "vertical", "margin": "xxl", "spacing": "sm",
+                "backgroundColor": "#fd2323",
+                "contents": [
+                    {
+                        "type": "text",
+                        "text": wordS,
+                        "wrap": true,
+                        "align": "center",
+                        "weight": "bold",
+                        "color": colorS,
+                        "size": "xxl"
+                    }
+                ]
+            }
+        }
+
+        var h12Obj =  {
+            "type": "box",
+            "layout": "horizontal",
+            "margin": "xxl",
+            "spacing": "sm",
+            "contents": [
+                makeH12Obj(wordH1, fc),
+                h12Separator,
+                h12Separator,
+                makeH12Obj(wordH2, fc),
+            ]
+        }
+        aryContent.push(h12Obj);
+        
+        var msgObj = {
+            "type": "bubble",
+            "styles": { "footer": { "separator": true } },
+            "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": aryContent
+            },
+            "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "spacing": "sm",
+                "contents": [
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                    "type": "uri",
+                    "label": "轉發春聯連結",
+                    "uri": editURL
+                    }
+                },
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                    "type": "uri",
+                    "label": "我要寫新的春聯",
+                    "uri": SERVER_URL_PATH
+                    }
+                },
+                {
+                    "type": "spacer",
+                    "size": "sm"
+                }
+                ],
+                "flex": 0
+            }
+        }
+        var a = liff.sendMessages([{
+            type: "flex",
+            altText: h1 + '\n' + h2,
+            contents: msgObj
+        }]).then(function(e){
+        });
+        pmsg.tip('正在幫你貼春聯到聊天室');
+        return msgObj;
+    }
+}
+
+// var SERVER_URL_PATH = 'https://liff.line.me/1653774878-bqoNoYlE/linebotPKuma/spt.html';
+var SERVER_URL_PATH = 'line://app/1653774878-bqoNoYlE';
+var aryExample = [
+    ['天增歲月人增壽','春滿乾坤福滿堂','年年有餘'],
+    ['天將化日舒清景','室有春風聚太和','四季平安'],
+    ['三春淑氣盈門室','萬里祥光滿斗文','百年事業紹箕裘'],
+    ['家祥世衍無疆慶','國泰天開不老春','戶納春風吉慶多'],
+    ['瑞日芝蘭光甲第','春風棠棣振家聲','一代箕裘世業長'],
+    ['五色雲中開曉日','萬年枝上動春風','一道祥光騰吉宇'],
+    ['三陽日照平安地','五福星臨吉慶家','四季平安'],
+    ['松竹梅歲寒三友','桃李杏春風一家','椿萱並茂'],
+    ['春夏秋冬集千祥','東南西北迎百福','年年有餘'],
+    ['鼠吱不盡的財富','用之不竭的健康','平安富貴']
+];
+function lotteryExample(){
+    var len = aryExample.length;
+    var idx = Math.floor(Math.random() * len);
+    return aryExample[idx];
+}
+
+function initVue(){
+    
+    var indexArea = {
+        template: `<div>
+            <div style="margin:2rem 0;" v-if="flagShowPushRoomBtn">
+                <div class="btnType5" v-on:click="pushRoom">幫聊天室門貼春聯</div>
+                <div style="visibility:hidden;"><textarea>{{roomMsgJSON}}</textarea></div>
+                <div class="btnType2" v-on:click="copyGenFn()">複製春聯連結</div>
+            </div>
+            <div class="textB" v-if="!flagShowPushRoomBtn">快來寫你的專屬對聯再複製春聯網址貼到其他聊天室後點開執行[貼春聯]。</div>
+            <div class="textB" v-if="flagShowPushRoomBtn">要編輯此春聯請在下方修改</div>
+            <div class="springKey">
+                <div>
+                    <div v-bind:class="cssFL2RBtn(false)" v-on:click="L2R=false">由右至左</div>
+                    <div v-bind:class="cssFL2RBtn(true)" v-on:click="L2R=true">由左至右</div>
+                </div>
+                <div>
+                    <div v-bind:class="cssFontColorBtn('black')" v-on:click="fc='black'">黑色字</div>
+                    <div v-bind:class="cssFontColorBtn('gold')" v-on:click="fc='gold'">金色字</div>
+                </div>
+                <div class="textA">上聯</div>
+                <input type="text" v-model="h1" class="spInput" maxlength="15">
+                <div style="margin:0.5rem 0;"> </div>
+                <div class="textA">下聯</div>
+                <input type="text" v-model="h2" class="spInput" maxlength="15">
+                <div style="margin:0.5rem 0;"> </div>
+                <div class="textA">橫批</div>
+                <input type="text" v-model="h3" class="spInput" maxlength="7" style="width:70vw;" placeholder="橫批可留空">
+                <div style="margin:0.3rem 0;"> </div>
+                <div>
+                    <div class="btnType2 inBlk" v-on:click="lotStr">隨機產生春聯</div>
+                    <div class="btnType2 inBlk" v-on:click="clearFn">清除</div>
+                </div>
+                <div style="margin:0.5rem 0;"> </div>
+            </div>
+            <div>
+                <div class="bgST fontST h3CSS" v-show="!!h3" v-bind:class="cssFontColor()">{{h3Display}}</div>
+                <div style="margin-top: 0.8rem; display:inline-block; width:100%;">
+                    <div style="float:left" class="bgST fontST h2CSS" v-show="!!h1 || !!h2" v-html="leftDisplay" v-bind:class="cssFontColor()"></div>
+                    <div style="float:right" class="bgST fontST h2CSS" v-show="!!h1 || !!h2" v-html="rightDisplay" v-bind:class="cssFontColor()"></div>
+                </div>
+            </div>
+            <div class="springKey" style="min-height: 60px;" v-if="false">
+                <div class="fLeft">
+                    <div class="btnSwitch" v-bind:class="isAppendFuCSS" v-on:click="ap=!ap"><div class="toggle"></div></div>
+                </div>
+                <div class="fLeft" style="height:26px;">
+                    <div class="textA" style="line-height: 1rem; margin-left:0.1rem;">附加抽祝福＼抽紅包功能</div>
+                </div>
+                <div v-show="ap" style="clear:left;">
+                    <div class="textB">你可以自訂四個祝福話語，或者填入紅包金額，或者填入抽獎物品，所有選項機率均等，限輸入十字。</div>
+                    <ol>
+                        <li><input type="text" v-model="z1" class="spInput" maxlength="10" style="width:70vw;"></li>
+                        <li><input type="text" v-model="z2" class="spInput" maxlength="10" style="width:70vw;"></li>
+                        <li><input type="text" v-model="z3" class="spInput" maxlength="10" style="width:70vw;"></li>
+                        <li><input type="text" v-model="z4" class="spInput" maxlength="10" style="width:70vw;"></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="springKey" style="min-height: 60px; margin-bottom: 50px;">
+                <div class="textB">產生 LINE 聊天室點擊連結後將他複製起來貼到其他聊天室再點開連結就可以按下 [貼春聯] 按鈕向聊天室貼上自己輸入的春聯</div>
+                <div class="btnType2" v-on:click="gen()">產生連結</div>
+                <div v-show="!!api"><textarea style="width:calc(100vw - 1.3rem); height:2rem; font-size:12px;" readonly>{{api}}</textarea></div>
+                <div v-show="!!api" class="btnType2" v-on:click="copyGenFn()">複製連結</div>
+                <div v-show="!!api" class="btnType2" v-on:click="pushDirectly()">幫聊天室門貼春聯</div>
+                <div class="btnType1" v-on:click="closeFn()">關閉 LIFF 春聯 APP</div>
+            </div>
+        </div>`,
+        computed: {
+            isL2RCSS: function(){
+                return (this.L2R) ? '' : 'off';
+            },
+            isAppendFuCSS: function(){
+                return (this.ap) ? '' : 'off';
+            },
+            h3Display: function(){
+                var a = this.h3;
+                if(!this.L2R){
+                    a = a.split('').reverse().join('');
+                }
+                return a;
+            },
+            leftDisplay: function(){
+                var tmpA = (this.L2R) ? this.h1 : this.h2;
+                return tmpA.split('').join('<br>');
+            },
+            rightDisplay: function(){
+                var tmpA = (this.L2R) ? this.h2 : this.h1;
+                return tmpA.split('').join('<br>');
+            }
+        },
+        data: function(){return {
+            flagShowPushRoomBtn: false,
+            roomMsgJSON: '',
+            h1: '', h2: '', h3: '', fc: 'black',
+            z1: '', z2: '', z3: '', z4: '',
+            L2R: false,
+            ap: false,
+            api: '', lotteryURL: ''
+        }},
+        methods: {
+            cssFontColorBtn: function(color){
+                return (color==this.fc) ? 'btnType3A' : 'btnType3';
+            },
+            cssFL2RBtn: function(b){
+                return (b==this.L2R) ? 'btnType3A' : 'btnType3';
+            },
+            cssFontColor:function(){
+                return 'color_' + this.fc;
+            },
+            clearFn: function(){this.h1='';this.h2='';this.h3='';},
+            closeFn: function(){liff.closeWindow();},
+            copyGenFn: function(){
+                this.gen();
+                this.copyFn();
+            },
+            copyFn: function(){
+                var el = document.createElement('textarea');
+                el.value = this.api;
+                document.body.appendChild(el);
+                el.select();
+                var flgA = document.execCommand('copy');
+                document.body.removeChild(el);
+                if(!flgA){
+                    pmsg.alert('複製失敗！');
+                }else{
+                    pmsg.tip('複製成功')
+                }
+            },
+            gen: function(){
+                var spOK = (!!this.h1 && !!this.h2);
+                var lotOK = (this.ap && !!this.z1 && !!this.z2 && !!this.z3 && !!this.z4);
+                var aryParam = [];
+                var st = SERVER_URL_PATH + '?ac=1&';
+
+                if(!spOK){ alert('春聯似乎沒有寫完喔，請再檢查一次'); return false; }
+                aryParam.push('h1=' + encodeURIComponent(this.h1));
+                aryParam.push('h2=' + encodeURIComponent(this.h2));
+                if(!!this.h3) aryParam.push('h3=' + encodeURIComponent(this.h3));
+                aryParam.push('fc=' + encodeURIComponent(this.fc));
+
+                if(this.L2R) aryParam.push('L2R=1');
+
+                if(this.ap && !lotOK){ alert('您似乎啟用了抽祝福功能卻未輸入完四個內容，請再檢查一次'); return false;}
+                if(this.ap){
+                    aryParam.push('z1=' + encodeURIComponent(this.z1));
+                    aryParam.push('z2=' + encodeURIComponent(this.z2));
+                    aryParam.push('z3=' + encodeURIComponent(this.z3));
+                    aryParam.push('z4=' + encodeURIComponent(this.z4));
+                    this.lotteryURL = SERVER_URL_PATH + '?ac=2&' + aryParam.join('&');
+                }
+
+                st += aryParam.join('&');
+                this.api = st;
+            },
+            lotStr: function(){
+                var a = lotteryExample();
+                this.h1 = a[0];
+                this.h2 = a[1];
+                if(a[2]) this.h3 = a[2];
+            },
+            pushDirectly: function(){
+                var lotURL = undefined;
+                if(this.ap){
+                    lotURL = this.lotteryURL;
+                }
+                this.roomMsgJSON = JSON.stringify(GB.sendRoomAD(this.h1, this.h2, this.h3, this.L2R, this.fc, this.api, lotURL));
+            },
+            pushRoom: function(){
+                this.gen();
+                var lotURL = undefined;
+                if(this.ap){
+                    lotURL = this.lotteryURL;
+                }
+                this.roomMsgJSON = JSON.stringify(GB.sendRoomAD(this.h1, this.h2, this.h3, this.L2R, this.fc, this.api, lotURL));
+            }
+        },
+        mounted: function(){
+            if(GetP.ac==1){
+                this.flagShowPushRoomBtn = true;
+                this.h1 = GetP.h1;
+                this.h2 = GetP.h2;
+                if(GetP.h3) this.h3 = GetP.h3;
+                if(GetP.L2R==1) this.L2R = true;
+                if(GetP.fc) this.fc = GetP.fc;
+                if(GetP.z1) this.z2 = GetP.z1;
+                if(GetP.z2) this.z2 = GetP.z2;
+                if(GetP.z3) this.z2 = GetP.z3;
+                if(GetP.z4) this.z2 = GetP.z4;
+            }
+        }
+    };
+    
+    var aboutArea = {
+        template: '<div>' +
+            '<div v-html="kss"></div>' +
+        '</div>', 
+        data: function(){return {
+            kss: '<ul>' +
+                '<li>發行單位：<span style="background-color: #BBB;"><span style="color:blue;">極</span><span style="color:#FEFE11;">光</span><span style="color:#005530;">駭</span><span style="color:red;">客</span></span></li>' +
+                '<li>程式名稱：LIFF 寫春聯抽祝福</li>' +
+                '<li>建立方式：填寫上下聯，橫批可選，可附加祝福或紅包</li>' +
+                '</ul>'
+        }}
+    };
+
+    var lotArea = {
+        template: `
+            <div>
+                <div>似乎，還沒有過年呢....年後再抽抽看吧！</div>
+            </div>
+        `,
+        computed: {
+            season: function(){
+                
+            }
+        }, 
+        data: function(){return {
+            kcc: 1
+        }}
+    }
+
+    var mainRoute = new VueRouter({
+            routes: [
+                {path: '/', component: indexArea},
+                {path: '/lot', component: lotArea},
+                {path: '/about', name: 'about', component: aboutArea},
+                {path: '*', component: indexArea}
+            ]
+    });
+
+    var tpl = Vue.compile('<div id="main">' + 
+            '<router-view></router-view>' +
+            '<div id="statusBar"></div>' +
+        '</div>');
+
+    var main = new Vue({
+            router: mainRoute,
+            render: tpl.render,
+            el: '#main'
+    });
+
+    if(GetP.ac==2){
+        location.hash = '#/lot'
+    }
+}
+
+var hand = {};
+function loginFn(){
+    hand.data = data;
+    var initThis = this;
+    var r = arguments;
+    liff.getProfile(function(pFile){
+        hand.profile = pFile;
+        if(typeof(successFn)=='function'){
+            successFn.apply(initThis, r);
+        }
+    })
+}
+function initFn(){
+    if(/localhost|^file/.test(location.href) || location.hash=='#/do' || /docc/.test(location.search)){
+            initVue();
+        return false;
+    }
+    // liff.init({liffId:'1653659221-nJx5AVL1'}, function(data){//V2
+    liff.init(function(data){//V1
+        if(!liff.getOS) liff.getOS = function(){return 'android'; }
+        if(!liff.isLoggedIn) liff.isLoggedIn = function(){return true; }
+        hand.isInWeb = !!(liff.getOS()=='web');
+        if(hand.isInWeb && !liff.isLoggedIn()){
+            liff.login({
+                redirectUri: location.href
+            });
+        }else{
+            liff.getProfile().then(function(e){
+                GB.profile = e;
+                initVue();
+            }).catch(function(e){
+                alert('抱歉，因您的手機中 LIFF APP 運作之 LINE 無法取得用戶資訊因此無法使用此功能。')
+            })
+        }
+    }, function(){
+        if(typeof(errorFn)=='function') errorFn.apply(this, arguments);
+    })
+}
+</script>
+
+</head>
+<body onload="initFn()">
+    <div id="main"></div>
+    <div id="pop"></div>
+</body>
+</html>
