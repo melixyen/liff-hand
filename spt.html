@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<title>LIFF 寫春聯</title>
+<title>LIFF 寫春聯抽祝福</title>
 <style>
 html {
     font-size: 10vw;
@@ -338,7 +338,7 @@ var GB = {
                 "contents": [{
                     "type": "button",
                     "style": "primary",
-                    "color": "#fd2323",
+                    "color": "#24acdc",
                     "action": {
                         "type": "uri",
                         "label": "打開祝福／紅包",
@@ -645,7 +645,7 @@ function initVue(){
     var lotArea = {
         template: `
             <div>
-                <div>似乎，還沒有過年呢....年後再抽抽看吧！</div>
+                <div>當你準備好了，就按下面的按鈕！</div>
                 <div class="btnType5" v-on:click="open">打開祝福／紅包</div>
                 <div style="visibility:hidden;"><textarea>{{roomMsgJSON}}</textarea></div>
             </div>
@@ -689,7 +689,7 @@ function initVue(){
                             "contents": [{
                                 "type": "text",
                                 "text": "贈送的祝福／紅包",
-                                "wrap": true, "color": "#323143", "align": "center",
+                                "wrap": true, "color": "#323143", "align": "center", "margin": "md",
                                 "size": "md"
                             }]
                         });
