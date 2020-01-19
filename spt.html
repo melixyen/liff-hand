@@ -256,7 +256,7 @@ var GetP = (function(){
 var GB = {
     ac: GetP.ac,
     profile: {
-        displayName: '小明',
+        displayName: '小明🔀',
         pictureUrl: 'https://i.imgur.com/eGWaGSg.jpg',
         userId: 'Kde49ee52b3ea232fbe032e440c8bedc5'
     },
@@ -331,6 +331,23 @@ var GB = {
             ]
         }
         aryContent.push(h12Obj);
+
+        if(lotURL){
+            var lotBtnObj = {
+                "type": "box", "layout": "horizontal", "margin": "xxl", "spacing": "sm",
+                "contents": [{
+                    "type": "button",
+                    "style": "primary",
+                    "color": "#fd2323",
+                    "action": {
+                        "type": "uri",
+                        "label": "打開祝福／紅包",
+                        "uri": lotURL
+                    }
+                }]
+            }
+            aryContent.push(lotBtnObj);
+        }
         
         var msgObj = {
             "type": "bubble",
@@ -451,15 +468,19 @@ function initVue(){
                     <div style="float:right" class="bgST fontST h2CSS" v-show="!!h1 || !!h2" v-html="rightDisplay" v-bind:class="cssFontColor()"></div>
                 </div>
             </div>
-            <div class="springKey" style="min-height: 60px;" v-if="false">
+            <div class="springKey" style="min-height: 60px;">
                 <div class="fLeft">
                     <div class="btnSwitch" v-bind:class="isAppendFuCSS" v-on:click="ap=!ap"><div class="toggle"></div></div>
                 </div>
                 <div class="fLeft" style="height:26px;">
-                    <div class="textA" style="line-height: 1rem; margin-left:0.1rem;">附加抽祝福＼抽紅包功能</div>
+                    <div class="textA" style="line-height: 1rem; margin-left:0.1rem;">附加抽祝福／紅包功能</div>
                 </div>
                 <div v-show="ap" style="clear:left;">
                     <div class="textB">你可以自訂四個祝福話語，或者填入紅包金額，或者填入抽獎物品，所有選項機率均等，限輸入十字。</div>
+                    <div>
+                        <div class="btnType2 inBlk" v-on:click="lotPray">祝福範例</div>
+                        <div class="btnType2 inBlk" v-on:click="lotCash">紅包範例</div>
+                    </div>
                     <ol>
                         <li><input type="text" v-model="z1" class="spInput" maxlength="10" style="width:70vw;"></li>
                         <li><input type="text" v-model="z2" class="spInput" maxlength="10" style="width:70vw;"></li>
@@ -554,15 +575,22 @@ function initVue(){
 
                 if(this.ap && !lotOK){ alert('您似乎啟用了抽祝福功能卻未輸入完四個內容，請再檢查一次'); return false;}
                 if(this.ap){
+                    var lotAryParam = ['z1=' + encodeURIComponent(this.z1), 'z2=' + encodeURIComponent(this.z2), 'z3=' + encodeURIComponent(this.z3), 'z4=' + encodeURIComponent(this.z4)];
                     aryParam.push('z1=' + encodeURIComponent(this.z1));
                     aryParam.push('z2=' + encodeURIComponent(this.z2));
                     aryParam.push('z3=' + encodeURIComponent(this.z3));
                     aryParam.push('z4=' + encodeURIComponent(this.z4));
-                    this.lotteryURL = SERVER_URL_PATH + '?ac=2&' + aryParam.join('&');
+                    this.lotteryURL = SERVER_URL_PATH + '?ac=2&' + lotAryParam.join('&') + '&dp=' + encodeURIComponent(GB.profile.displayName);
                 }
 
                 st += aryParam.join('&');
                 this.api = st;
+            },
+            lotCash: function(){
+                this.z1 = '600';this.z2 = '1000';this.z3 = '1200';this.z4 = '2000';
+            },
+            lotPray: function(){
+                this.z1 = '心想事成';this.z2 = '身體健康';this.z3 = '財源廣進';this.z4 = '飛黃騰達';
             },
             lotStr: function(){
                 var a = lotteryExample();
@@ -572,21 +600,19 @@ function initVue(){
             },
             pushDirectly: function(){
                 var lotURL = undefined;
-                if(this.ap){
+                var lotOK = (this.ap && !!this.z1 && !!this.z2 && !!this.z3 && !!this.z4);
+                if(this.ap && lotOK){
                     lotURL = this.lotteryURL;
                 }
                 this.roomMsgJSON = JSON.stringify(GB.sendRoomAD(this.h1, this.h2, this.h3, this.L2R, this.fc, this.api, lotURL));
             },
             pushRoom: function(){
                 this.gen();
-                var lotURL = undefined;
-                if(this.ap){
-                    lotURL = this.lotteryURL;
-                }
-                this.roomMsgJSON = JSON.stringify(GB.sendRoomAD(this.h1, this.h2, this.h3, this.L2R, this.fc, this.api, lotURL));
+                this.pushDirectly();
             }
         },
         mounted: function(){
+            GB.app1 = this;
             if(GetP.ac==1){
                 this.flagShowPushRoomBtn = true;
                 this.h1 = GetP.h1;
@@ -594,10 +620,11 @@ function initVue(){
                 if(GetP.h3) this.h3 = GetP.h3;
                 if(GetP.L2R==1) this.L2R = true;
                 if(GetP.fc) this.fc = GetP.fc;
-                if(GetP.z1) this.z2 = GetP.z1;
+                if(GetP.z1) this.z1 = GetP.z1;
                 if(GetP.z2) this.z2 = GetP.z2;
-                if(GetP.z3) this.z2 = GetP.z3;
-                if(GetP.z4) this.z2 = GetP.z4;
+                if(GetP.z3) this.z3 = GetP.z3;
+                if(GetP.z4) this.z4 = GetP.z4;
+                if(GetP.z1 && GetP.z2 && GetP.z3 && GetP.z4) this.ap = true;
             }
         }
     };
@@ -619,6 +646,8 @@ function initVue(){
         template: `
             <div>
                 <div>似乎，還沒有過年呢....年後再抽抽看吧！</div>
+                <div class="btnType5" v-on:click="open">打開祝福／紅包</div>
+                <div style="visibility:hidden;"><textarea>{{roomMsgJSON}}</textarea></div>
             </div>
         `,
         computed: {
@@ -627,8 +656,103 @@ function initVue(){
             }
         }, 
         data: function(){return {
-            kcc: 1
-        }}
+            kcc: 1,
+            roomMsgJSON: '',
+            dp: '',
+            z1: '', z2: '', z3: '', z4: ''
+        }},
+        methods: {
+            open: function(){
+                var retStr = '', ascTotal = 0;
+                var uid = GB.profile.userId;
+                var aryUID = uid.split('');
+                aryUID.map(function(w){
+                    ascTotal += w.charCodeAt();
+                })
+                var idx = ascTotal % 4;
+                var aryZ = [this.z1, this.z2, this.z3, this.z4];
+                retStr = aryZ[idx];
+                if(liff.sendMessages){
+                    var aryM = [];
+                    if(this.dp){
+                        aryM.push({
+                            "type": "box", "layout": "horizontal", "backgroundColor": "#fdf393", "spacing": "sm",
+                            "contents": [{
+                                "type": "text",
+                                "text": this.dp,
+                                "wrap": true, "color": "#323143", "align": "center", "size": "xl",
+                                "weight": "bold"
+                            }]
+                        });
+                        aryM.push({
+                            "type": "box", "layout": "horizontal", "spacing": "sm",
+                            "contents": [{
+                                "type": "text",
+                                "text": "贈送的祝福／紅包",
+                                "wrap": true, "color": "#323143", "align": "center",
+                                "size": "md"
+                            }]
+                        });
+                    }
+                    var userImage = (GB.profile.pictureUrl) ? GB.profile.pictureUrl : 'https://i.imgur.com/iARuNO0.jpg';
+                    var userName = (GB.profile.displayName) ? GB.profile.displayName : '不俱名者';
+                    aryM.push({
+                        "type": "box", "layout": "baseline", "backgroundColor": "#ade3e3", "margin": "md",
+                        "contents": [{
+                            "type": "icon", "url": userImage, "size": "3xl"
+                        }, {
+                            "type": "text", "text": userName, "weight": "bold", "color": "#235445", "size": "md"
+                        }]
+                    })
+                    aryM.push({
+                        "type": "box", "layout": "horizontal", "spacing": "sm",
+                        "contents": [{
+                            "type": "text", "text": "抽到了", "color": "#323143", "align": "center", "size": "md"
+                        }]
+                    });
+                    aryM.push({
+                        "type": "box", "layout": "horizontal", "backgroundColor": "#fdc3d3", "margin": "md",
+                        "contents": [{
+                            "type": "text", "text": retStr, "color": "#232324",
+                            "wrap": true, "align": "center", "size": "xxl"
+                        }]
+                    });
+                    
+                    var msgObj = {
+                        "type": "bubble",
+                        "styles": { "footer": { "separator": true } },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": aryM
+                        }
+                    }
+                    var a = liff.sendMessages([{
+                        type: "flex",
+                        altText: this.dp + '贈予' + GB.profile.displayName + '的祝福／紅包',
+                        contents: msgObj
+                    }]).then(function(e){
+                    });
+                    this.roomMsgJSON = JSON.stringify(msgObj);
+                    pmsg.tip('開獎');
+                }else{
+                    pmsg.tip('發生錯誤，無法開獎')
+                }
+                setTimeout(function(){
+                    liff.closeWindow();
+                },3000)
+            }
+        },
+        mounted: function(){
+            GB.app2 = this;
+            if(GetP.ac==2){
+                if(GetP.z1) this.z1 = GetP.z1;
+                if(GetP.z2) this.z2 = GetP.z2;
+                if(GetP.z3) this.z3 = GetP.z3;
+                if(GetP.z4) this.z4 = GetP.z4;
+                this.dp = GetP.dp || '';
+            }
+        }
     }
 
     var mainRoute = new VueRouter({
@@ -670,6 +794,7 @@ function loginFn(){
 }
 function initFn(){
     if(/localhost|^file/.test(location.href) || location.hash=='#/do' || /docc/.test(location.search)){
+        liff.sendMessages = function(){return {then:function(){}} }
             initVue();
         return false;
     }
