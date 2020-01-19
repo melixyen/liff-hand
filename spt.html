@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<title>LIFF 寫春聯抽祝福</title>
+<title>LIFF 寫春聯</title>
 <style>
 html {
     font-size: 10vw;
@@ -214,6 +214,10 @@ body {
         padding: 0.2rem 0.4rem;
     }
 }
+
+.no_under{
+    text-decoration: none;
+}
 </style>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
@@ -380,6 +384,8 @@ var GB = {
     }
 }
 
+var ytbURL = 'https://youtu.be/ozvUvTEBMnA';
+//https://melixapi.000webhostapp.com/linebotPKuma/spt.html
 // var SERVER_URL_PATH = 'https://liff.line.me/1653774878-bqoNoYlE/linebotPKuma/spt.html';
 var SERVER_URL_PATH = 'line://app/1653774878-bqoNoYlE';
 var aryExample = [
@@ -408,6 +414,9 @@ function initVue(){
                 <div class="btnType5" v-on:click="pushRoom">幫聊天室門貼春聯</div>
                 <div style="visibility:hidden;"><textarea>{{roomMsgJSON}}</textarea></div>
                 <div class="btnType2" v-on:click="copyGenFn()">複製春聯連結</div>
+            </div>
+            <div>
+                <a href="https://youtu.be/ozvUvTEBMnA" target="_blank" class="no_under"><div class="btnType5">教學影片(將連到 Youtube)</div></a>
             </div>
             <div class="textB" v-if="!flagShowPushRoomBtn">快來寫你的專屬對聯再複製春聯網址貼到其他聊天室後點開執行[貼春聯]。</div>
             <div class="textB" v-if="flagShowPushRoomBtn">要編輯此春聯請在下方修改</div>
