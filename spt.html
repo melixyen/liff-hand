@@ -290,6 +290,17 @@ var GB = {
             "layout": "vertical",
             "margin": "xxl",
             "spacing": "sm",
+            "backgroundColor": "#8c5020",
+            "contents": [
+                { "type": "text", "text": "\n", "wrap": true, "weight": "bold", "color": "#100010", "size": "xxl" }
+            ]
+        }
+        var h12SeparatorA = {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "sm",
+            "spacing": "sm",
+            "backgroundColor": "#8c5020",
             "contents": [
                 { "type": "text", "text": "\n", "wrap": true, "weight": "bold", "color": "#100010", "size": "xxl" }
             ]
@@ -326,7 +337,7 @@ var GB = {
             "contents": [
                 makeH12Obj(wordH1, fc),
                 h12Separator,
-                h12Separator,
+                h12SeparatorA,
                 makeH12Obj(wordH2, fc),
             ]
         }
@@ -337,8 +348,8 @@ var GB = {
                 "type": "box", "layout": "horizontal", "margin": "xxl", "spacing": "sm",
                 "contents": [{
                     "type": "button",
-                    "style": "primary",
-                    "color": "#24acdc",
+                    "style": "secondary",
+                    "color": "#ef87e0",
                     "action": {
                         "type": "uri",
                         "label": "打開祝福／紅包",
@@ -689,7 +700,7 @@ function initVue(){
                             "contents": [{
                                 "type": "text",
                                 "text": "贈送的祝福／紅包",
-                                "wrap": true, "color": "#323143", "align": "center", "margin": "md",
+                                "wrap": true, "color": "#fdf393", "align": "center", "margin": "md",
                                 "size": "md"
                             }]
                         });
@@ -711,7 +722,7 @@ function initVue(){
                         }]
                     });
                     aryM.push({
-                        "type": "box", "layout": "horizontal", "backgroundColor": "#fdc3d3", "margin": "md",
+                        "type": "box", "layout": "horizontal", "backgroundColor": "#ef87e0", "margin": "md",
                         "contents": [{
                             "type": "text", "text": retStr, "color": "#232324",
                             "wrap": true, "align": "center", "size": "xxl"
@@ -724,6 +735,7 @@ function initVue(){
                         "body": {
                             "type": "box",
                             "layout": "vertical",
+                            "backgroundColor": "#ff4030",
                             "contents": aryM
                         }
                     }
