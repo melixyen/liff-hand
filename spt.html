@@ -348,8 +348,8 @@ var GB = {
                 "type": "box", "layout": "horizontal", "margin": "xxl", "spacing": "sm",
                 "contents": [{
                     "type": "button",
-                    "style": "secondary",
-                    "color": "#ef87e0",
+                    "style": "primary",
+                    "color": "#cca840",
                     "action": {
                         "type": "uri",
                         "label": "打開祝福／紅包",
@@ -687,11 +687,11 @@ function initVue(){
                     var aryM = [];
                     if(this.dp){
                         aryM.push({
-                            "type": "box", "layout": "horizontal", "backgroundColor": "#fdf393", "spacing": "sm",
+                            "type": "box", "layout": "horizontal", "backgroundColor": "#cb111f", "spacing": "sm",
                             "contents": [{
                                 "type": "text",
                                 "text": this.dp,
-                                "wrap": true, "color": "#323143", "align": "center", "size": "xl",
+                                "wrap": true, "color": "#efd0cb", "align": "center", "size": "xl",
                                 "weight": "bold"
                             }]
                         });
@@ -700,7 +700,7 @@ function initVue(){
                             "contents": [{
                                 "type": "text",
                                 "text": "贈送的祝福／紅包",
-                                "wrap": true, "color": "#fdf393", "align": "center", "margin": "md",
+                                "wrap": true, "color": "#e96535", "align": "center", "margin": "md",
                                 "size": "md"
                             }]
                         });
@@ -708,23 +708,23 @@ function initVue(){
                     var userImage = (GB.profile.pictureUrl) ? GB.profile.pictureUrl : 'https://i.imgur.com/iARuNO0.jpg';
                     var userName = (GB.profile.displayName) ? GB.profile.displayName : '不俱名者';
                     aryM.push({
-                        "type": "box", "layout": "baseline", "backgroundColor": "#ade3e3", "margin": "md",
+                        "type": "box", "layout": "baseline", "backgroundColor": "#cb111f", "margin": "md",
                         "contents": [{
                             "type": "icon", "url": userImage, "size": "3xl"
                         }, {
-                            "type": "text", "text": userName, "weight": "bold", "color": "#235445", "size": "md"
+                            "type": "text", "text": userName, "weight": "bold", "color": "#efd0cb", "size": "md"
                         }]
                     })
                     aryM.push({
                         "type": "box", "layout": "horizontal", "spacing": "sm",
                         "contents": [{
-                            "type": "text", "text": "抽到了", "color": "#323143", "align": "center", "size": "md"
+                            "type": "text", "text": "抽到了", "color": "#e96535", "align": "center", "size": "md"
                         }]
                     });
                     aryM.push({
-                        "type": "box", "layout": "horizontal", "backgroundColor": "#ef87e0", "margin": "md",
+                        "type": "box", "layout": "horizontal", "backgroundColor": "#cc8a40", "margin": "md",
                         "contents": [{
-                            "type": "text", "text": retStr, "color": "#232324",
+                            "type": "text", "text": retStr, "color": "#fefefe",
                             "wrap": true, "align": "center", "size": "xxl"
                         }]
                     });
@@ -735,7 +735,7 @@ function initVue(){
                         "body": {
                             "type": "box",
                             "layout": "vertical",
-                            "backgroundColor": "#ff4030",
+                            "backgroundColor": "#cb111f",
                             "contents": aryM
                         }
                     }
