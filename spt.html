@@ -426,12 +426,27 @@ var aryExample = [
     ['三陽日照平安地','五福星臨吉慶家','四季平安'],
     ['松竹梅歲寒三友','桃李杏春風一家','椿萱並茂'],
     ['春夏秋冬集千祥','東南西北迎百福','年年有餘'],
+    ['鼠錢鼠房不鼠債務表','貪吃貪喝不貪小便宜','憑良心鼠鈔票'],
+    ['論文專題輕鬆過','準時畢業不留級','教授放人'],
+    ['鼠鈔票鼠到手軟','睡大覺睡到黃昏','頭彩來一張'],
+    ['日出唸書見月歸','鼠一鼠二好成績','努力用功'],
     ['鼠吱不盡的財富','用之不竭的健康','平安富貴']
 ];
 function lotteryExample(){
     var len = aryExample.length;
     var idx = Math.floor(Math.random() * len);
     return aryExample[idx];
+}
+
+function str2Int(uid){
+    
+    var aryUID = uid.split('');
+    var ascTotal = 0;
+    aryUID.map(function(w){
+        ascTotal += w.charCodeAt();
+    })
+    var idx = ascTotal % 4;
+    console.log('ascTotal:' + ascTotal + ' , ' + idx);
 }
 
 function initVue(){
