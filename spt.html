@@ -272,7 +272,7 @@ var GB = {
         userId: 'Kde49ee52b3ea232fbe032e440c8bedc5'
     },
     sendRoomAD: function(h1, h2, h3, L2R, color, editURL, lotURL){
-        var fc = (color=='gold') ? '#ffd700' : '#111111';
+        var fc = (color=='gold') ? '#ef8b26' : '#111111';
         var aryH1 = h1.split('');
         var aryH2 = h2.split('');
         var aryH3 = (!!h3) ? h3.split('') : [];
@@ -290,7 +290,7 @@ var GB = {
                     "type": "box",
                     "layout": "baseline",
                     "spacing": "sm",
-                    "backgroundColor": "#fd2323",
+                    "backgroundColor": "#cd0914",
                     "contents": aryH3
             }
             aryContent.push(h3Obj);
@@ -301,7 +301,7 @@ var GB = {
             "layout": "vertical",
             "margin": "xxl",
             "spacing": "sm",
-            "backgroundColor": "#8c5020",
+            "backgroundColor": "#9c634e",
             "contents": [
                 { "type": "text", "text": "\n", "wrap": true, "weight": "bold", "color": "#100010", "size": "xxl" }
             ]
@@ -311,7 +311,7 @@ var GB = {
             "layout": "vertical",
             "margin": "sm",
             "spacing": "sm",
-            "backgroundColor": "#8c5020",
+            "backgroundColor": "#9c634e",
             "contents": [
                 { "type": "text", "text": "\n", "wrap": true, "weight": "bold", "color": "#100010", "size": "xxl" }
             ]
@@ -325,7 +325,7 @@ var GB = {
         function makeH12Obj(wordS, colorS){
             return {
                 "type": "box", "layout": "vertical", "margin": "xxl", "spacing": "sm",
-                "backgroundColor": "#fd2323",
+                "backgroundColor": "#cd0914",
                 "contents": [
                     {
                         "type": "text",
@@ -360,7 +360,7 @@ var GB = {
                 "contents": [{
                     "type": "button",
                     "style": "primary",
-                    "color": "#cca840",
+                    "color": "#cc8b36",
                     "action": {
                         "type": "uri",
                         "label": "打開祝福／紅包",
@@ -548,6 +548,7 @@ function initVue(){
                 <div class="textB">本程式的 LINE 專用分享碼</div>
                 <div v-show="!flagShowQRIMG" class="btnType2" v-on:click="flagShowQRIMG=true">顯示 QR Code</div>
                 <div v-show="flagShowQRIMG" v-html="qrcodeIMG" style="margin-bottom:60px;"></div>
+                <div style="font-size:12px;color:#dedede; padding-left:2vw;">V0.1.1</div>
             </div>
         </div>`,
         computed: {
@@ -767,7 +768,7 @@ function initVue(){
                         "contents": [{
                             "type": "icon", "url": userImage, "size": "3xl"
                         }, {
-                            "type": "text", "text": userName, "weight": "bold", "color": "#efd0cb", "size": "xl"
+                            "type": "text", "wrap": true, "text": userName, "weight": "bold", "align": "center", "color": "#efd0cb", "size": "xl"
                         }]
                     })
                     aryM.push({
