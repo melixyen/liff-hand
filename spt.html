@@ -218,6 +218,17 @@ body {
 .no_under{
     text-decoration: none;
 }
+
+@keyframes fcopmove{
+    from{ color:rgb(65, 6, 26);}
+    to{color:red;}
+}
+.fcopAni{
+    background: rgba(251,251,251,0.1);
+    animation: fcopmove 2s infinite;
+    -webkit-animation: fcopmove 2s infinite;
+}  
+
 </style>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
@@ -226,7 +237,7 @@ body {
 <!--<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>-->
 <script type="text/javascript" src="https://melixapi.000webhostapp.com/linebotGroupBuy/liff/pmsg.js"></script>
 <!--<script type="text/javascript" src="https://melixyen.github.io/liff-hand/liffhand2.js"></script>-->
-<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>-->
 <script src="./clean000.js"></script>
 
 <script type="text/javascript">
@@ -413,6 +424,7 @@ var GB = {
 }
 
 var ytbURL = 'https://youtu.be/ozvUvTEBMnA';
+var qrcodeURL = 'https://i.imgur.com/Crhr2jF.png';
 //https://melixapi.000webhostapp.com/linebotPKuma/spt.html
 // var SERVER_URL_PATH = 'https://liff.line.me/1653774878-bqoNoYlE/linebotPKuma/spt.html';
 var SERVER_URL_PATH = 'line://app/1653774878-bqoNoYlE';
@@ -435,6 +447,10 @@ var aryExample = [
     ['健康檢查無紅字','避車望路平安行','鼠年身壯'],
     ['輸到憂時方恨少','翻本記得帶夠錢','九輸賭一贏'],
     ['三分舔下胃鼠無','喘出大氣才叫停','過年吃到飽'],
+    ['升職加薪放長假','旅行購物吃大餐','控制體重'],
+    ['親友一手鼠的盡','過年不用發紅包','邊緣人生'],
+    ['工作狀況莫再問','結婚之事莫再提','閃避點滿'],
+    ['春日出遊群花艷','漫漫歸途鼠車燈','塞車也要玩'],
     ['鼠吱不盡的財富','用之不竭的健康','平安富貴']
 ];
 function lotteryExample(){
@@ -512,7 +528,7 @@ function initVue(){
                         <div class="btnType2 inBlk" v-on:click="lotPray">祝福範例</div>
                         <div class="btnType2 inBlk" v-on:click="lotCash">紅包範例</div>
                     </div>
-                    <ol>
+                    <ol style="margin-bottom: 30px;">
                         <li><input type="text" v-model="z1" class="spInput" maxlength="10" style="width:70vw;"></li>
                         <li><input type="text" v-model="z2" class="spInput" maxlength="10" style="width:70vw;"></li>
                         <li><input type="text" v-model="z3" class="spInput" maxlength="10" style="width:70vw;"></li>
@@ -527,6 +543,11 @@ function initVue(){
                 <div v-show="!!api" class="btnType2" v-on:click="copyGenFn()">複製連結</div>
                 <div v-show="!!api" class="btnType2" v-on:click="pushDirectly()">幫聊天室門貼春聯</div>
                 <div class="btnType1" v-on:click="closeFn()">關閉 LIFF 春聯 APP</div>
+            </div>
+            <div>
+                <div class="textB">本程式的 LINE 專用分享碼</div>
+                <div v-show="!flagShowQRIMG" class="btnType2" v-on:click="flagShowQRIMG=true">顯示 QR Code</div>
+                <div v-show="flagShowQRIMG" v-html="qrcodeIMG" style="margin-bottom:60px;"></div>
             </div>
         </div>`,
         computed: {
@@ -543,6 +564,9 @@ function initVue(){
                 }
                 return a;
             },
+            qrcodeIMG: function(){
+                return '<img src="' + qrcodeURL + '" style="width:90%;">';
+            },
             leftDisplay: function(){
                 var tmpA = (this.L2R) ? this.h1 : this.h2;
                 return tmpA.split('').join('<br>');
@@ -554,8 +578,9 @@ function initVue(){
         },
         data: function(){return {
             flagShowPushRoomBtn: false,
+            flagShowQRIMG: false,
             roomMsgJSON: '',
-            h1: '', h2: '', h3: '', fc: 'black',
+            h1: '', h2: '', h3: '', fc: 'gold',
             z1: '', z2: '', z3: '', z4: '',
             L2R: false,
             ap: false,
@@ -675,10 +700,14 @@ function initVue(){
 
     var lotArea = {
         template: `
-            <div>
+            <div style="margin-top: 2vw;">
                 <div>當你準備好了，就按下面的按鈕！</div>
-                <div class="btnType5" v-on:click="open">打開祝福／紅包</div>
+                <div class="btnType5" v-on:click="open" v-show="!afterVin">打開祝福／紅包</div>
                 <div style="visibility:hidden;"><textarea>{{roomMsgJSON}}</textarea></div>
+                <div style="margin: 5vw;font-size:1rem;" v-show="afterVin">
+                    <div class="fcopAni">開獎中...</div>
+                </div>
+                <div class="btnType1" v-on:click="closeFn()" v-show="afterVin">關閉 LIFF 春聯 APP</div>
             </div>
         `,
         computed: {
@@ -687,6 +716,7 @@ function initVue(){
             }
         }, 
         data: function(){return {
+            afterVin: false,
             kcc: 1,
             roomMsgJSON: '',
             dp: '',
@@ -700,7 +730,13 @@ function initVue(){
                 aryUID.map(function(w){
                     ascTotal += w.charCodeAt();
                 })
-                var idx = ascTotal % 4;
+                var mtop = (typeof(this.dp)=='string' && this.dp!='') ? this.dp.charCodeAt() : 0;
+                var intZ1 = (typeof(this.z1)=='string' && this.z1!='') ? this.z1.charCodeAt() : 0;
+                var intZ2 = (typeof(this.z2)=='string' && this.z2!='') ? this.z2.charCodeAt() : 0;
+                var intZ3 = (typeof(this.z3)=='string' && this.z3!='') ? this.z3.charCodeAt() : 0;
+                var intZ4 = (typeof(this.z4)=='string' && this.z4!='') ? this.z4.charCodeAt() : 0;
+                var idx = (mtop + ascTotal + intZ1 + intZ2 + intZ3 + intZ4) % 4;
+                alert(idx);
                 var aryZ = [this.z1, this.z2, this.z3, this.z4];
                 retStr = aryZ[idx];
                 if(liff.sendMessages){
@@ -766,13 +802,13 @@ function initVue(){
                     }]).then(function(e){
                     });
                     this.roomMsgJSON = JSON.stringify(msgObj);
-                    pmsg.tip('開獎');
+                    this.afterVin = true;
                 }else{
                     pmsg.tip('發生錯誤，無法開獎')
                 }
                 setTimeout(function(){
                     liff.closeWindow();
-                },3000)
+                },2000)
             }
         },
         mounted: function(){
