@@ -377,6 +377,7 @@ var GB = {
             "body": {
                 "type": "box",
                 "layout": "vertical",
+                "backgroundColor": "#ece0d9",
                 "contents": aryContent
             },
             "footer": {
@@ -548,7 +549,7 @@ function initVue(){
                 <div class="textB">本程式的 LINE 專用分享碼</div>
                 <div v-show="!flagShowQRIMG" class="btnType2" v-on:click="flagShowQRIMG=true">顯示 QR Code</div>
                 <div v-show="flagShowQRIMG" v-html="qrcodeIMG" style="margin-bottom:60px;"></div>
-                <div style="font-size:12px;color:#dedede; padding-left:2vw;">V0.1.1</div>
+                <div style="font-size:12px;color:#aaa; padding-left:2vw;">V0.11 SW:Melix , UI:Yoko</div>
             </div>
         </div>`,
         computed: {
