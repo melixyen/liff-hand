@@ -477,9 +477,18 @@ function initVue(){
     var indexArea = {
         template: `<div>
             <div style="margin:2rem 0;" v-if="flagShowPushRoomBtn">
-                <div class="btnType5" v-on:click="pushRoom">幫聊天室門貼春聯</div>
+                <div class="btnType5" v-on:click="pushRoom">幫聊天室貼春聯</div>
                 <div style="visibility:hidden;"><textarea>{{roomMsgJSON}}</textarea></div>
                 <div class="btnType2" v-on:click="copyGenFn()">複製春聯連結</div>
+                <div class="textB" v-if="flagShowPushRoomBtn">
+                    <ol>
+                        <li>點選[複製春聯連結]以複製網址</li>
+                        <li>關閉 LIFF 寫春聯 Web App，至想要貼上春聯的聊天室</li>
+                        <li>將網址貼上後送出，然後按訊息上的網址打開 LIFF 寫春聯 Web App</li>
+                        <li>按下[幫聊天室貼春聯]後，春聯內容將貼到新的聊天室內</li>
+                        <li>若要修改春聯內容或抽獎內容，請往下編輯後再產生連結並直接貼春聯即可</li>
+                    </ol>
+                </div>
             </div>
             <div>
                 <a href="https://youtu.be/ozvUvTEBMnA" target="_blank" class="no_under"><div class="btnType5">教學影片(將連到 Youtube)</div></a>
@@ -543,14 +552,14 @@ function initVue(){
                 <div class="btnType2" v-on:click="gen()">產生連結</div>
                 <div v-show="!!api"><textarea style="width:calc(100vw - 1.3rem); height:2rem; font-size:12px;" readonly>{{api}}</textarea></div>
                 <div v-show="!!api" class="btnType2" v-on:click="copyGenFn()">複製連結</div>
-                <div v-show="!!api" class="btnType2" v-on:click="pushDirectly()">幫聊天室門貼春聯</div>
+                <div v-show="!!api" class="btnType2" v-on:click="pushDirectly()">幫聊天室貼春聯</div>
                 <div class="btnType1" v-on:click="closeFn()">關閉 LIFF 春聯 APP</div>
             </div>
             <div>
                 <div class="textB">本程式的 LINE 專用分享碼</div>
                 <div v-show="!flagShowQRIMG" class="btnType2" v-on:click="flagShowQRIMG=true">顯示 QR Code</div>
                 <div v-show="flagShowQRIMG" v-html="qrcodeIMG" style="margin-bottom:60px;"></div>
-                <div style="font-size:12px;color:#aaa; padding-left:2vw;">V0.12  SW: Melix , UI: Yoko</div>
+                <div style="font-size:12px;color:#aaa; padding-left:2vw;">V0.13  SW: Melix , UI: Yoko</div>
             </div>
         </div>`,
         computed: {
