@@ -141,6 +141,6 @@ Sure you need initial liff sdk.js and liff-hand at next.html too.
 
 LIFF 2.0
 
-[團購訂單小助手](https://melixapi.000webhostapp.com/linebotGroupBuy/liff.html)
+[團購訂單小助手](https://jiapi.net/linebotGroupBuy/liff.html)
 
 可用來與朋友訂購商品、餐點。
